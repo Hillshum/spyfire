@@ -1,0 +1,7 @@
+.toggled-text {
+  background-color: lightgray;
+}
+
+.toggled-text.strike {
+  text-decoration: line-through;
+}
