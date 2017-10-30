@@ -5,8 +5,8 @@ import './styles.css'
 export default class ToggledText extends React.Component{
 
   render() {
-    const {text='', strike=false} = this.props
-    return <div className={"toggled-text " + (strike ? "strike" : '')}>
+    const {text='', strike=false, onClick} = this.props
+    return <div onClick={onClick} className={"toggled-text " + (strike ? "strike" : '')}>
       {text}
     </div>
   }

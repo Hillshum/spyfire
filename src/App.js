@@ -21,10 +21,33 @@ const database = firebase.database()
 
 
 const gameId = 'game1'
+const userId = 'bob'
 
 class App extends Component {
   state = {
-    games: {}
+    games: {},
+    users: {}
+  }
+  constructor(props) {
+    super(props)
+    this.toggleLocation = this.toggleLocation.bind(this)
+    this.togglePlayer = this.togglePlayer.bind(this)
+  }
+
+  toggleLocation(location) {
+    const current = this.state.users[userId].games[gameId].locations[location]
+
+    this.usersRef.child(`${userId}/games/${gameId}/locations`).update({
+      [location]: !current
+    })
+  }
+
+  togglePlayer(player) {
+    const current = this.state.users[userId].games[gameId].users[player]
+
+    this.usersRef.child(`${userId}/games/${gameId}/users`).update({
+      [player]: !current
+    })
   }
 
   componentWillMount() {
@@ -32,19 +55,32 @@ class App extends Component {
     this.gamesListener = this.gamesRef.on('value', snapshot=>{
       this.setState({games: snapshot.val()})
     })
+
+    this.usersRef = database.ref('/users')
+    this.usersListener = this.usersRef.on('value', snapshot=>{
+      this.setState({users: snapshot.val()})
+    })
   }
 
   componentWillUnmount() {
     this.gamesRef.off(this.gamesListener)
   }
   render() {
+    const game = this.state.games[gameId]
+    const user = this.state.users[userId]
+
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Welcome to Spyfall</h1>
         </header>
-        <Game game={this.state.games[gameId]} />
+        {(game && user) && <Game 
+          game={this.state.games[gameId]}
+          user={user}
+          toggleLocation={this.toggleLocation}
+          togglePlayer={this.togglePlayer}
+        />} 
       </div>
     );
   }
