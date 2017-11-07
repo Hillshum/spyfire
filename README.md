@@ -1,3 +1,19 @@
+# Spyfire
+
+This is a developing (read: not yet working) implementation of the game Spyfall.
+It is inspired by https://github.com/mpcovcd/spyfall, but written using React for Firebase.
+
+I'm doing mostly because I want to run my own server with custom locations and 
+Firebase brings the hosting costs down to essentially zero (for my anticipated
+traffic anyway)
+
+
+
+# Create-React-App instructions
+
+This stuff is all boilerplate that may be helpful...
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
