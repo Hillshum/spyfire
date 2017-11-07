@@ -1,0 +1,8 @@
+{
+  "apiKey": "SOMETHING",
+  "authDomain": "OTHER STUFF",
+  "databaseURL": "MORE SECRETS",
+  "projectId": "CLASSIFIED",
+  "storageBucket": "NUNYA",
+  "messagingSenderId": "BUSINESS"
+}
