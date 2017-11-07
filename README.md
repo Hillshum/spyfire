@@ -8,6 +8,16 @@ Firebase brings the hosting costs down to essentially zero (for my anticipated
 traffic anyway)
 
 
+## Setup
+
+* Make a new Firebase project if necessary
+* Copy the provided config info into `/src/config/firebase.json.example` and rename appropriately
+* Run `npm start`
+
+Deploying to Firebase hosting should be pretty straightforward. Just
+follow the Firebase docs
+
+
 
 # Create-React-App instructions
 
