@@ -6,9 +6,6 @@ import ToggledText from '../../components/toggled-text'
 
 const ActiveGame = ({game, userChoices, togglePlayer, toggleLocation, endGame}) => {
 
-    // const {gameId, user} = this.props
-    // const {game} = this.state
-    // const userChoices = user.games[gameId]
     return <div className="game-wrapper">
       <div className="location">Location {locations[game.location]}</div>
       {Object.keys(game.players).map(name=>(

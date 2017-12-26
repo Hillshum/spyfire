@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import GameScreen from './screens/game'
 import LoginScreen from './screens/login'
 
-import {database} from './util/firebase'
-
 import logo from './logo.svg';
 import './App.css';
 
