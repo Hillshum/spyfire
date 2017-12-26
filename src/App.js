@@ -1,17 +1,44 @@
 import React, { Component } from 'react';
 
-import Game from './components/game'
+import Game from './screens/game'
+import LoginScreen from './screens/login'
+
+import {database} from './util/firebase'
 
 import logo from './logo.svg';
 import './App.css';
 
 
 
-const gameId = 'game1'
 const userId = 'bob'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      gameId: null,
+      user: {}
+    }
+    this.joinGame = this.joinGame.bind(this)
+  }
+
+  componentWillMount() {
+    this.usersRef = database.ref(`/users/${userId}`)
+    this.usersListener = this.usersRef.on('value', snapshot=>{
+      this.setState({user: snapshot.val()})
+    })
+  }
+
+  componentWillUnmount() {
+    this.usersRef.off(this.usersListener)
+  }
+
+  joinGame({name, gameId}) {
+    this.setState({gameId})
+  }
+
   render() {
+    const {gameId, user} = this.state
 
     return (
       <div className="App">
@@ -19,7 +46,14 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to Spyfall</h1>
         </header>
-        {(gameId && userId) && <Game gameId={gameId} userId={userId}/>} 
+        {(gameId && user) ?
+         <Game gameId={gameId} user={user}/>
+         : <LoginScreen 
+            onJoin={this.joinGame}
+            onCreate={this.createGame}
+          />
+        } 
+
       </div>
     );
   }

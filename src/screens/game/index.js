@@ -49,8 +49,8 @@ export default class Game extends React.Component {
     this.gamesRef.off(this.gamesListener)
   }
   render () {
-    const {gameId} = this.props
-    const {game, user} = this.state
+    const {gameId, user} = this.props
+    const {game} = this.state
     if (!(game && user)) return <div>Loading</div>
     const userChoices = user.games[gameId]
     return <div className="game-wrapper">
