@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Game from './screens/game'
+import GameScreen from './screens/game'
 import LoginScreen from './screens/login'
 
 import {database} from './util/firebase'
@@ -22,17 +22,6 @@ class App extends Component {
     this.joinGame = this.joinGame.bind(this)
   }
 
-  componentWillMount() {
-    this.usersRef = database.ref(`/users/${userId}`)
-    this.usersListener = this.usersRef.on('value', snapshot=>{
-      this.setState({user: snapshot.val()})
-    })
-  }
-
-  componentWillUnmount() {
-    this.usersRef.off(this.usersListener)
-  }
-
   joinGame({name, gameId}) {
     this.setState({gameId})
   }
@@ -47,7 +36,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to Spyfall</h1>
         </header>
         {(gameId && user) ?
-         <Game gameId={gameId} user={user}/>
+         <GameScreen gameId={gameId} userId={userId}/>
          : <LoginScreen 
             onJoin={this.joinGame}
             onCreate={this.createGame}

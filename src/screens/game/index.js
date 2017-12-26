@@ -1,10 +1,10 @@
 import React from 'react'
 
 import {database} from '../../util/firebase'
-import locations from '../../util/locations'
-import ToggledText from '../../components/toggled-text'
 
-export default class Game extends React.Component {
+import ActiveGame from '../../components/active-game'
+
+export default class GameScreen extends React.Component {
   state = {
     game: null,
     user: null
@@ -17,7 +17,8 @@ export default class Game extends React.Component {
 
   toggleLocation(location) {
     const {gameId} = this.props
-    const current = this.state.user.games[gameId].locations[location]
+    const {user} = this.state
+    const current = user.games[gameId].locations[location]
 
     this.usersRef.child(`/games/${gameId}/locations`).update({
       [location]: !current
@@ -26,7 +27,8 @@ export default class Game extends React.Component {
 
   togglePlayer(player) {
     const {gameId} = this.props
-    const current = this.state.user.games[gameId].users[player]
+    const {user} = this.state
+    const current = user.games[gameId].users[player]
 
     this.usersRef.child(`/games/${gameId}/users`).update({
       [player]: !current
@@ -49,24 +51,15 @@ export default class Game extends React.Component {
     this.gamesRef.off(this.gamesListener)
   }
   render () {
-    const {gameId, user} = this.props
-    const {game} = this.state
+    const {gameId} = this.props
+    const {game, user} = this.state
     if (!(game && user)) return <div>Loading</div>
     const userChoices = user.games[gameId]
-    return <div className="game-wrapper">
-      <div className="location">Location {locations[game.location]}</div>
-      {Object.keys(game.players).map(name=>(
-        <ToggledText text={name} strike={userChoices.users[name]}
-        onClick={()=>this.togglePlayer(name)} key={name}/>
-      ))}
-
-      {Object.keys(locations).map(location=>(
-        <ToggledText key={location} text={locations[location]}
-          onClick={()=>this.toggleLocation(location)}
-        strike={userChoices.locations[location]}/>
-      ))}
-
-
-    </div>
+    return <ActiveGame
+      userChoices={userChoices}
+      game={game}
+      toggleLocation={this.toggleLocation}
+      togglePlayer={this.togglePlayer }
+    />
   }
 }
