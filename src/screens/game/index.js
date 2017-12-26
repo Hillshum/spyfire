@@ -1,8 +1,10 @@
 import React from 'react'
 
 import {database} from '../../util/firebase'
+import pickRandom from '../../util/pickRandom'
 
 import ActiveGame from '../../components/active-game'
+import PendingGame from '../../components/pending-game'
 
 export default class GameScreen extends React.Component {
   state = {
@@ -13,6 +15,18 @@ export default class GameScreen extends React.Component {
     super(props)
     this.toggleLocation = this.toggleLocation.bind(this)
     this.togglePlayer = this.togglePlayer.bind(this)
+    this.startGame = this.startGame.bind(this)
+  }
+
+  startGame() {
+    
+    const {players} = this.state.game
+    const {spy, location} = pickRandom(Object.keys(players))
+
+    const newPlayers = Object.keys(players).reduce((prev, curr)=>(
+      {...prev, [curr]: curr === spy} // all players are false except spy
+    ), {}) 
+    this.gamesRef.update({location, players: newPlayers})
   }
 
   toggleLocation(location) {
@@ -55,11 +69,15 @@ export default class GameScreen extends React.Component {
     const {game, user} = this.state
     if (!(game && user)) return <div>Loading</div>
     const userChoices = user.games[gameId]
-    return <ActiveGame
-      userChoices={userChoices}
-      game={game}
-      toggleLocation={this.toggleLocation}
-      togglePlayer={this.togglePlayer }
-    />
+    if (game.location) {
+      return <ActiveGame
+        userChoices={userChoices}
+        game={game}
+        toggleLocation={this.toggleLocation}
+        togglePlayer={this.togglePlayer }
+      />
+    } else {
+      return <PendingGame game={game} onStart={this.startGame} />
+    }
   }
 }
