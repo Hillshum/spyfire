@@ -75,6 +75,7 @@ export default class GameScreen extends React.Component {
         game={game}
         toggleLocation={this.toggleLocation}
         togglePlayer={this.togglePlayer }
+        endGame={()=>this.gamesRef.update({location: null})}
       />
     } else {
       return <PendingGame game={game} onStart={this.startGame} />

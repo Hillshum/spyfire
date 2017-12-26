@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import locations from '../../util/locations'
 import ToggledText from '../../components/toggled-text'
 
-const ActiveGame = ({game, userChoices, togglePlayer, toggleLocation}) => {
+const ActiveGame = ({game, userChoices, togglePlayer, toggleLocation, endGame}) => {
 
     // const {gameId, user} = this.props
     // const {game} = this.state
@@ -22,6 +22,7 @@ const ActiveGame = ({game, userChoices, togglePlayer, toggleLocation}) => {
         strike={userChoices.locations[location]}/>
       ))}
 
+      <button onClick={endGame}>End Game</button>
 
     </div>
 }
@@ -30,7 +31,8 @@ ActiveGame.propTypes = {
   game: PropTypes.object.isRequired,
   userChoices: PropTypes.object.isRequired,
   togglePlayer: PropTypes.func.isRequired,
-  toggleLocation: PropTypes.func.isRequired
+  toggleLocation: PropTypes.func.isRequired,
+  endGame: PropTypes.func.isRequired
 }
 
 
