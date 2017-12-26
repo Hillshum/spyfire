@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import locations from '../../util/locations'
 import ToggledText from '../../components/toggled-text'
@@ -23,6 +24,13 @@ const ActiveGame = ({game, userChoices, togglePlayer, toggleLocation}) => {
 
 
     </div>
+}
+
+ActiveGame.propTypes = {
+  game: PropTypes.object.isRequired,
+  userChoices: PropTypes.object.isRequired,
+  togglePlayer: PropTypes.func.isRequired,
+  toggleLocation: PropTypes.func.isRequired
 }
 
 

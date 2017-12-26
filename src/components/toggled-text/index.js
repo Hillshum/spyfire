@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import './styles.css'
 
-export default class ToggledText extends React.Component{
+class ToggledText extends React.Component{
 
   render() {
     const {text='', strike=false, onClick} = this.props
@@ -11,3 +12,12 @@ export default class ToggledText extends React.Component{
     </div>
   }
 }
+
+ToggledText.propTypes = {
+  text: PropTypes.string.isRequired,
+  strike: PropTypes.bool,
+  onClick: PropTypes.func.isRequired
+}
+
+
+export default ToggledText
