@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-export default class LoginScreen extends React.Component {
+class LoginScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -31,3 +32,10 @@ export default class LoginScreen extends React.Component {
     </div>
   }
 }
+
+LoginScreen.propTypes = {
+  onJoin: PropTypes.func.isRequired,
+  onCreate: PropTypes.func.isRequired
+}
+
+export default LoginScreen

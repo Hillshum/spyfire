@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import {database} from '../../util/firebase'
 import pickRandom from '../../util/pickRandom'
@@ -8,7 +9,7 @@ import ActiveGame from '../../components/active-game'
 import PendingGame from '../../components/pending-game'
 import { Object } from 'es6-shim';
 
-export default class GameScreen extends React.Component {
+class GameScreen extends React.Component {
   state = {
     game: null,
     user: null,
@@ -107,3 +108,10 @@ export default class GameScreen extends React.Component {
     }
   }
 }
+
+GameScreen.propTypes = {
+  gameId: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired
+}
+
+export default GameScreen
