@@ -6,22 +6,22 @@ import ToggledText from '../../components/toggled-text'
 
 const ActiveGame = ({game, userChoices, togglePlayer, toggleLocation, endGame}) => {
 
-    return <div className="game-wrapper">
-      <div className="location">Location {locations[game.location]}</div>
-      {Object.keys(game.players).map(name=>(
-        <ToggledText text={name} strike={userChoices.users[name]}
-        onClick={()=>togglePlayer(name)} key={name}/>
-      ))}
+  return <div className="game-wrapper">
+    <div className="location">Location {locations[game.location]}</div>
+    {Object.keys(game.players).map(name=>(
+      <ToggledText text={name} strike={userChoices.players[name]}
+      onClick={()=>togglePlayer(name)} key={name}/>
+    ))}
 
-      {Object.keys(locations).map(location=>(
-        <ToggledText key={location} text={locations[location]}
-          onClick={()=>toggleLocation(location)}
-        strike={userChoices.locations[location]}/>
-      ))}
+    {Object.keys(locations).map(location=>(
+      <ToggledText key={location} text={locations[location]}
+        onClick={()=>toggleLocation(location)}
+      strike={userChoices.locations[location]}/>
+    ))}
 
-      <button onClick={endGame}>End Game</button>
+    <button onClick={endGame}>End Game</button>
 
-    </div>
+  </div>
 }
 
 ActiveGame.propTypes = {
