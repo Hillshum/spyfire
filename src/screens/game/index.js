@@ -45,7 +45,7 @@ export default class GameScreen extends React.Component {
     const {user} = this.state
     const current = user.games[gameId].players[player]
 
-    this.usersRef.child(`/games/${gameId}/users`).update({
+    this.usersRef.child(`/games/${gameId}/players`).update({
       [player]: !current
     })
   }
@@ -58,7 +58,13 @@ export default class GameScreen extends React.Component {
     const gameId = this.props.gameId
     this.gameRef = database.ref(`/games/${gameId}`)
     this.gamesListener = this.gameRef.on('value', snapshot=>{
-      this.setState({game: snapshot.val()})
+      const newGame = snapshot.val()
+      const oldGame = this.state.game
+      if (oldGame && newGame.location !== oldGame.location) {
+        this.clearUserChoices()
+      }
+
+      this.setState({game: newGame})
     })
 
     this.usersRef = database.ref(`/users/${this.props.userId}`)
