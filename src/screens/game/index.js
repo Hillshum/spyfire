@@ -33,9 +33,9 @@ export default class GameScreen extends React.Component {
   toggleLocation(location) {
     const {gameId} = this.props
     const {user} = this.state
-    const current = user.games[gameId].locations[location]
+    const current = user.locations[location]
 
-    this.usersRef.child(`/games/${gameId}/locations`).update({
+    this.userGameRef.child(`/locations`).update({
       [location]: !current
     })
   }
@@ -43,37 +43,37 @@ export default class GameScreen extends React.Component {
   togglePlayer(player) {
     const {gameId} = this.props
     const {user} = this.state
-    const current = user.games[gameId].players[player]
+    const current = user.players[player]
 
-    this.usersRef.child(`/games/${gameId}/players`).update({
+    this.userGameRef.child(`/players`).update({
       [player]: !current
     })
   }
 
   clearUserChoices() {
-    this.usersRef.child(`/games/${this.props.gameId}`).remove()
+    this.userGameRef.remove()
   }
 
   componentWillMount() {
     const gameId = this.props.gameId
     this.gameRef = database.ref(`/games/${gameId}`)
     this.gamesListener = this.gameRef.on('value', snapshot=>{
-      const newGame = snapshot.val()
+      const newGame = snapshot.val() || {}
       const oldGame = this.state.game
       if (oldGame && newGame.location !== oldGame.location) {
         this.clearUserChoices()
       }
 
+      newGame.players = newGame.players || {}
+
       this.setState({game: newGame})
     })
 
-    this.usersRef = database.ref(`/users/${this.props.userId}`)
-    this.usersListener = this.usersRef.on('value', snapshot=>{
-      const newUser = snapshot.val()
-      newUser.games = newUser.games || {}
-      newUser.games[gameId] = newUser.games[gameId] || {}
-      newUser.games[gameId].locations = newUser.games[gameId].locations || {}
-      newUser.games[gameId].players = newUser.games[gameId].players || {}
+    this.userGameRef = database.ref(`/users/games/${this.props.userId}/${gameId}`)
+    this.usersListener = this.userGameRef.on('value', snapshot=>{
+      const newUser = snapshot.val() || {}
+      newUser.locations = newUser.locations || {}
+      newUser.players = newUser.players || {}
       this.setState({user: newUser})
     })
   }
@@ -85,11 +85,9 @@ export default class GameScreen extends React.Component {
     const {gameId} = this.props
     const {game, user} = this.state
     if (!game || !user) return <div>Loading</div>
-    const userGames = user.games || {}
-    const userChoices = userGames[gameId] || {}
     if (game.location) {
       return <ActiveGame
-        userChoices={userChoices}
+        userChoices={user}
         game={game}
         toggleLocation={this.toggleLocation}
         togglePlayer={this.togglePlayer }
