@@ -2,14 +2,17 @@ import React from 'react'
 
 import {database} from '../../util/firebase'
 import pickRandom from '../../util/pickRandom'
+import NameQuery from '../../util/name-query'
 
 import ActiveGame from '../../components/active-game'
 import PendingGame from '../../components/pending-game'
+import { Object } from 'es6-shim';
 
 export default class GameScreen extends React.Component {
   state = {
     game: null,
-    user: null
+    user: null,
+    playerNames: {}
   }
   constructor(props) {
     super(props)
@@ -31,7 +34,6 @@ export default class GameScreen extends React.Component {
   }
 
   toggleLocation(location) {
-    const {gameId} = this.props
     const {user} = this.state
     const current = user.locations[location]
 
@@ -41,7 +43,6 @@ export default class GameScreen extends React.Component {
   }
 
   togglePlayer(player) {
-    const {gameId} = this.props
     const {user} = this.state
     const current = user.players[player]
 
@@ -57,6 +58,7 @@ export default class GameScreen extends React.Component {
   componentWillMount() {
     const gameId = this.props.gameId
     this.gameRef = database.ref(`/games/${gameId}`)
+    this.nameQuery = new NameQuery()
     this.gamesListener = this.gameRef.on('value', snapshot=>{
       const newGame = snapshot.val() || {}
       const oldGame = this.state.game
@@ -66,29 +68,36 @@ export default class GameScreen extends React.Component {
 
       newGame.players = newGame.players || {}
 
+      this.nameQuery.listen(Object.keys(newGame.players), players=>{
+        this.setState({playerNames: players})
+      })
+
       this.setState({game: newGame})
     })
 
     this.userGameRef = database.ref(`/users/games/${this.props.userId}/${gameId}`)
-    this.usersListener = this.userGameRef.on('value', snapshot=>{
+    this.userGameListener = this.userGameRef.on('value', snapshot=>{
       const newUser = snapshot.val() || {}
       newUser.locations = newUser.locations || {}
       newUser.players = newUser.players || {}
       this.setState({user: newUser})
     })
+
   }
 
   componentWillUnmount() {
     this.gameRef.off(this.gamesListener)
+    this.userGameRef.off(this.userGameListener)
+    this.nameQuery.stop()
   }
   render () {
-    const {gameId} = this.props
-    const {game, user} = this.state
+    const {game, user, playerNames} = this.state
     if (!game || !user) return <div>Loading</div>
     if (game.location) {
       return <ActiveGame
         userChoices={user}
         game={game}
+        playerNames={playerNames}
         toggleLocation={this.toggleLocation}
         togglePlayer={this.togglePlayer }
         endGame={()=>this.gameRef.update({location: null})}

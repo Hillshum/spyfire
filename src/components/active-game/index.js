@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 import locations from '../../util/locations'
 import ToggledText from '../../components/toggled-text'
 
-const ActiveGame = ({game, userChoices, togglePlayer, toggleLocation, endGame}) => {
+const ActiveGame = ({game, userChoices, playerNames, togglePlayer, toggleLocation, endGame}) => {
 
   return <div className="game-wrapper">
     <div className="location">Location {locations[game.location]}</div>
     {Object.keys(game.players).map(name=>(
-      <ToggledText text={name} strike={userChoices.players[name]}
+      <ToggledText text={playerNames[name]} strike={userChoices.players[name]}
       onClick={()=>togglePlayer(name)} key={name}/>
     ))}
 

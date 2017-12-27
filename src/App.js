@@ -33,7 +33,7 @@ class App extends Component {
   }
 
   joinGame({name, gameId}) {
-    this.saveName(name, this.state.user.uid)
+    this.saveName(this.state.user.uid, name)
     this.setState({gameId})
   }
 

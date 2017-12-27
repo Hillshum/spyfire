@@ -4,7 +4,7 @@ export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: 'Bob',
+      name: '',
       gameId: ''
     }
     this.onJoin = this.onJoin.bind(this)
