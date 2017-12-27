@@ -51,7 +51,7 @@ export default class GameScreen extends React.Component {
   }
 
   clearUserChoices() {
-    this.usersRef.child(this.props.gameId).update({})
+    this.usersRef.child(`/games/${this.props.gameId}`).remove()
   }
 
   componentWillMount() {
