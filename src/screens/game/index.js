@@ -27,12 +27,7 @@ class GameScreen extends React.Component {
   startGame() {
     
     const {players} = this.state.game
-    const {spy, location} = pickRandom(Object.keys(players))
-
-    const newPlayers = Object.keys(players).reduce((prev, curr)=>(
-      {...prev, [curr]: curr === spy} // all players are false except spy
-    ), {}) 
-    this.gameRef.update({location, players: newPlayers})
+    this.gameRef.update(pickRandom(Object.keys(players)))
   }
 
   toggleLocation(location) {
@@ -102,6 +97,7 @@ class GameScreen extends React.Component {
         <ActiveGame
           userChoices={user}
           game={game}
+          userId={userId}
           playerNames={playerNames}
           toggleLocation={this.toggleLocation}
           togglePlayer={this.togglePlayer }
