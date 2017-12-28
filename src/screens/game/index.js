@@ -95,22 +95,21 @@ class GameScreen extends React.Component {
   render () {
     const {userId, gameId} = this.props
     const {game, user, playerNames} = this.state
-    if (!game || !user) return <div>Loading</div>
-    if (game.location) {
-      return <ActiveGame
-        userChoices={user}
-        game={game}
-        playerNames={playerNames}
-        toggleLocation={this.toggleLocation}
-        togglePlayer={this.togglePlayer }
-        endGame={()=>this.gameRef.update({location: null})}
-      />
-    } else {
-      return <div className='game-screen'>
-        <PendingGame game={game} onStart={this.startGame} />
-        <GameLogin userId={userId} gameId={gameId} />
-      </div>
-    }
+    return <div className='game-screen'>
+      <GameLogin userId={userId} gameId={gameId} />
+      {(!game || !user) ? <div>Loading</div> : 
+      (game.location ? 
+        <ActiveGame
+          userChoices={user}
+          game={game}
+          playerNames={playerNames}
+          toggleLocation={this.toggleLocation}
+          togglePlayer={this.togglePlayer }
+          endGame={()=>this.gameRef.update({location: null})}
+        /> : 
+          <PendingGame playerNames={playerNames} game={game} onStart={this.startGame} />
+      )}
+    </div>
   }
 }
 

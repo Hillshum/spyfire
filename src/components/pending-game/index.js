@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const PendingGame = ({game, onStart}) => {
+const PendingGame = ({game, playerNames, onStart}) => {
   return <div className='pending-game'>
     <h4>Ready to play</h4>
     <ul className='ready-players'>
       {Object.keys(game.players).map(user=>(
-        <li key={user}>{user}</li>
+        <li key={user}>{playerNames[user]}</li>
       ))}
     </ul>
     <button onClick={onStart}>Start Game</button>
@@ -15,7 +15,8 @@ const PendingGame = ({game, onStart}) => {
 
 PendingGame.propTypes = {
   game: PropTypes.object.isRequired,
-  onStart: PropTypes.func.isRequired
+  onStart: PropTypes.func.isRequired,
+  playerNames: PropTypes.object.isRequired
 }
 
 export default PendingGame
