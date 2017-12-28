@@ -6,6 +6,7 @@ import pickRandom from '../../util/pickRandom'
 import NameQuery from '../../util/name-query'
 
 import ActiveGame from '../../components/active-game'
+import GameLogin from '../../components/game-login'
 import PendingGame from '../../components/pending-game'
 import { Object } from 'es6-shim';
 
@@ -92,6 +93,7 @@ class GameScreen extends React.Component {
     this.nameQuery.stop()
   }
   render () {
+    const {userId, gameId} = this.props
     const {game, user, playerNames} = this.state
     if (!game || !user) return <div>Loading</div>
     if (game.location) {
@@ -104,7 +106,10 @@ class GameScreen extends React.Component {
         endGame={()=>this.gameRef.update({location: null})}
       />
     } else {
-      return <PendingGame game={game} onStart={this.startGame} />
+      return <div className='game-screen'>
+        <PendingGame game={game} onStart={this.startGame} />
+        <GameLogin userId={userId} gameId={gameId} />
+      </div>
     }
   }
 }
