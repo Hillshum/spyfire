@@ -9,6 +9,7 @@ import logo from './logo.svg';
 import './App.css';
 
 
+const ID_CHARS = 'abcdefghijklmnopqrstuvwxyz'
 
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
       user: {}
     }
     this.joinGame = this.joinGame.bind(this)
+    this.createGame = this.createGame.bind(this)
   }
 
   componentWillMount() {
@@ -34,6 +36,15 @@ class App extends Component {
 
   joinGame({name, gameId}) {
     this.saveName(this.state.user.uid, name)
+    this.setState({gameId})
+  }
+
+  createGame({name}) {
+    this.saveName(this.state.user.uid, name)
+    const gameId = 'xxxxxx'.replace(x=>{
+      return ID_CHARS[Math.floor(Math.random() * ID_CHARS.length)]
+    })
+    console.log(gameId)
     this.setState({gameId})
   }
 
