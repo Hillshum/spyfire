@@ -5,7 +5,6 @@ import {auth, database} from './util/firebase'
 import GameScreen from './screens/game'
 import LoginScreen from './screens/login'
 
-import logo from './logo.svg';
 import './App.css';
 
 
@@ -54,7 +53,6 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to Spyfall</h1>
         </header>
         {(gameId && userId) ?
