@@ -1,3 +1,38 @@
+@import "./vars.scss";
+
+* {
+  color: $color-primary
+}
+
+.btn {
+  padding: 7px;
+  border: 0;
+  border-radius: 5px;
+  background-color: $color-secondary;
+  color: $background-primary;
+}
+nput:not([type]), input[type="email"], input[type="number" ], input[type="password"], input[type="tel" ], input[type="url" ], input[type="text" ], textarea {
+  background-color: $background-secondary;
+  border: 2px solid $color-secondary;
+  padding: 5px;
+  margin: 2px;
+  border-radius: 5px;
+
+  &:focus {
+    outline: none;
+  }
+
+}
+::-webkit-input-placeholder,
+:-moz-placeholder, 
+::-moz-placeholder, 
+:-ms-input-placeholder, {
+  color: $color-accent;
+}
+
+html, body {
+  background-color: $background-primary;
+}
 .App {
   text-align: center;
 }
@@ -8,10 +43,10 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
+  background-color: $background-secondary;
+  height: 50px;
   padding: 20px;
-  color: white;
+  color: $color-primary;
 }
 
 .App-title {

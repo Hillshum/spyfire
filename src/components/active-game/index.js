@@ -22,7 +22,7 @@ const ActiveGame = ({game, userId, userChoices, playerNames, togglePlayer, toggl
       strike={userChoices.locations[location]}/>
     ))}
 
-    <button onClick={endGame}>End Game</button>
+    <button className="btn" onClick={endGame}>End Game</button>
 
   </div>
 }

@@ -1,5 +1,8 @@
+@import "../../vars.scss";
+
+
 .toggled-text {
-  background-color: lightgray;
+  background-color: $background-secondary;
 }
 
 .toggled-text.strike {

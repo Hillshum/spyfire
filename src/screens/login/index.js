@@ -26,8 +26,8 @@ class LoginScreen extends React.Component {
       <input type='text' value={name} placeholder='Name' onChange={e=>this.setState({name: e.currentTarget.value})} />
       <input type='text' value={gameId} placeholder='Game ID' onChange={e=>this.setState({gameId: e.currentTarget.value.toLocaleLowerCase()})} />
 
-      <button type='button' onClick={this.onJoin}>Join Game</button>
-      <button type='button' onClick={this.onCreate}>Create New Game</button>
+      <button className="btn" type='button' onClick={this.onJoin}>Join Game</button>
+      <button className="btn" type='button' onClick={this.onCreate}>Create New Game</button>
 
     </div>
   }

@@ -9,7 +9,7 @@ const PendingGame = ({game, playerNames, onStart}) => {
         <li key={user}>{playerNames[user]}</li>
       ))}
     </ul>
-    <button onClick={onStart}>Start Game</button>
+    <button className="btn" onClick={onStart}>Start Game</button>
   </div>
 }
 
