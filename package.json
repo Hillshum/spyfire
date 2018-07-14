@@ -21,7 +21,8 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive"
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "deploy": "npm run build && firebase deploy"
   },
   "devDependencies": {
     "@storybook/react": "^3.2.13",
