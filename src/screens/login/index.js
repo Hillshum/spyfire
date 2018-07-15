@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import Button from '../../components/button'
+
 class LoginScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -27,7 +29,7 @@ class LoginScreen extends React.Component {
       <input type='text' value={gameId} placeholder='Game ID' onChange={e=>this.setState({gameId: e.currentTarget.value.toLocaleLowerCase()})} />
 
       <button className="btn" type='button' onClick={this.onJoin}>Join Game</button>
-      <button className="btn" type='button' onClick={this.onCreate}>Create New Game</button>
+      <Button className="btn" type='button' onClick={this.onCreate}>Create New Game</Button>
 
     </div>
   }
